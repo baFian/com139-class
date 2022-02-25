@@ -5,6 +5,8 @@ from assets.status import Status
 
 
 def report_all_by_field_obj(my_objs: list, my_field: str, w_filter: bool = False, val: float = 0.0) -> None:
+    clientsTotal = len(my_objs)
+    print("Clientes totales", clientsTotal)
     print('\n === Report for %s field ===' % my_field)
     is_status = isinstance(getattr(my_objs[0], my_field), Status)
     if not is_status:
@@ -23,11 +25,33 @@ def report_all_by_field_obj(my_objs: list, my_field: str, w_filter: bool = False
         print('Stdev %s: %5.3f' % (my_field, get_stdev_obj(my_objs, my_field, w_filter, val)))
         print('Variance %s: %5.3f' % (my_field, get_variance_obj(my_objs, my_field, w_filter, val)))
         # TODO: Calculate the percentage of minimal value
+        minCustomers= get_matching_value_obj(my_objs, my_field, min_time)
+        print(len(minCustomers))
+        percentage = len(minCustomers) / clientsTotal
+        print("Porcentaje: ", percentage)
+
         # TODO: Group std dev customers and display the list
+
+
     else:
         print(is_status)
         values = get_map_values(my_objs, my_field)
         print(values)
+        succesfull=0
+        renegade=0
+        for y in values:
+            y = str(y)
+            if y == "SUCCESS":
+                succesfull+=1
+            if y == "RENEGED":
+                renegade+=1
+        print("atendidos",succesfull)
+        print("desesperaos",renegade)
+        succesRate= succesfull / clientsTotal
+        print("SuccesRate", succesRate)
+        
+
+
         # TODO: get a histogram count on every status
         # TODO: graph the histogram
         # TODO: get success rate
