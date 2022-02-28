@@ -1,0 +1,3 @@
+to run conway.py
+Python3 'Size of universe' 'File with points'
+Example: Python3 conway.py 70 config5.txt
