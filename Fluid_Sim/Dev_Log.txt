@@ -1,0 +1,22 @@
+Fabian Adolfo Cervantes Romero					Simulation & Visualization
+
+Development Log
+
+1-	Multiple sources for velocity and density:
+I started playing with the code to understand it, doing multiple runs, and changing some numbers and variables to see how the fluid simulation reacts, then
+I read de comments to catch some ideas of the given code. I realized how to add densities and velocities and what values I need to place some more. 
+Densities gave some trouble with few color schemas, but I noticed that if I change it, they could be more perceptible.
+
+2-	Animate Velocity Forces:
+This was a hard challenge because I first tried to simulate some movement with a ‘for’, but the results did look strange, after that 
+I had no idea of how to achieve it but then I remember the affine transformations and I used one of them to create a spin animation with a rotation matrix.
+even so this task was complicated, so I only managed to make one animation. I even tried to add viscosity and diffusion because in the document it said that it was a way to evolve speeds
+
+3-	Create Color Schemas:
+I think this was the easiest task because I noticed the simulator is using matplotlib and pyplot so I just researched on the internet how to change color in a imshow statement and
+I found that there are already preset color palettes
+
+4-	Simulate the presence of objects in the simulation:
+to get this feature I played too much with the code to see how I could get an object, I tried to put more density, then much more, but I didn't get the result until I realized that 
+the density was moved by speed, so I opted to try with small density values and in the results I observed that the area actually moved less as if there was something there, it was when
+I decided to put density 0 to the objects

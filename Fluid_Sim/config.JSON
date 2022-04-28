@@ -1,0 +1,39 @@
+{
+    "animation":{
+		"anim": "rota"
+    },
+    "densities": [
+        {
+            "X": 40,
+            "Y": 40,
+            "size":3,
+            "force": 100
+        },
+        {
+            "X": 14,
+            "Y": 14,
+            "size":3,
+            "force": 100
+        }
+    ],
+    "velocities":[
+        {
+            "X": 40,
+            "Y": 40,
+		"dir1":-1,
+		"dir2":-1
+        }
+    ],
+    "objects":[
+        {
+            "X": 45,
+            "Y": 18,
+            "size": 5
+        },
+        {
+            "X": 14,
+            "Y": 14,
+            "size": 3
+        }
+    ]
+}

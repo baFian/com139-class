@@ -4,8 +4,11 @@ and the mike ash vulgarization https://mikeash.com/pyblog/fluid-simulation-for-d
 
 https://github.com/Guilouf/python_realtime_fluidsim
 """
+from re import X
 import numpy as np
 import math
+import sys
+import json
 
 
 class Fluid:
@@ -160,20 +163,98 @@ class Fluid:
             self.roty = self.rotx
         return self.rotx, self.roty
 
+def readFile(filename: str) -> dict:
+    file= open(filename, "r")
+
+    values = json.loads(file.read())
+    file.close()
+    values["mode"] = "json"
+
+    return values
+
+def set_objects(obj,fluid,n):
+    for o in obj:
+        x = o.get('X')
+        y = o.get('Y')
+        sizeO = o.get('size')
+
+        x1 = x + sizeO
+        y1 = y + sizeO
+
+        inst.density[x:x1, y:y1] = n
+
+def set_densities(den,fluid):
+    for d in den:
+        x = d.get('X')
+        y = d.get('Y')
+        sizeD = d.get('size')
+        force = d.get('force')
+
+        x1 = x + sizeD
+        y1 = y + sizeD
+
+        inst.density[x:x1,y:y1]+=force
+
+def set_velocities(vels,fluid,animation,i):
+    for v in vels:
+            x = v.get('X')
+            y = v.get('Y')
+            d1 = v.get('dir1')
+            d2 = v.get('dir2')
+            #print(d1,d2)
+
+            if animation.get('anim') =='rotation':
+
+                mat=np.array([d1,d2])
+
+                angle = i * math.pi / 180
+                rotationMat =np.array([
+                    [math.cos(angle), -math.sin(angle)],
+                    [math.sin(angle), math.cos(angle)],
+                ])
+                Rotated =np.matmul(mat,rotationMat)
+                inst.velo[x, y] = Rotated
+            else:
+                inst.velo[x,y] = [d1,d2]
+
 
 if __name__ == "__main__":
+
     try:
         import matplotlib.pyplot as plt
         from matplotlib import animation
 
         inst = Fluid()
-
+        #Change the color schemas via command line. {Blues, Greens,Oranges, BuPu, GnBu, jet,etc}
+        print(sys.argv[1])
+        file = sys.argv[1]
+        color = sys.argv[2]
+        setUp = readFile(file)
+    
         def update_im(i):
+
+            objValues = setUp.get('objects',[])
+            set_objects(objValues, inst, 0)
+            
+            denValues = setUp.get('densities', [])
+            set_densities(denValues, inst)
+
+            velValues = setUp.get('velocities',[])
+            an = setUp.get('animation')
+            set_velocities(velValues,inst,an,i)
+            #print(an.get('anim'))
+            
+ 
+            #inst.diff =1000
             # We add new density creators in here
-            inst.density[14:17, 14:17] += 100  # add density into a 3*3 square
+            #inst.density[30:33, 30:37] += 100
+            #inst.density[14:17, 14:17] = 0
+            #inst.density[14:17, 14:17] += 500   # add density into a 3*3 square
             # We add velocity vector values in here
-            inst.velo[20, 20] = [-2, -2]
+            #inst.velo[40, 40] = [-1, -1]
             inst.step()
+            set_objects(objValues,inst, 200)
+            #inst.density[14:17, 14:17] = 0
             im.set_array(inst.density)
             q.set_UVC(inst.velo[:, :, 1], inst.velo[:, :, 0])
             # print(f"Density sum: {inst.density.sum()}")
@@ -182,7 +263,7 @@ if __name__ == "__main__":
         fig = plt.figure()
 
         # plot density
-        im = plt.imshow(inst.density, vmax=100, interpolation='bilinear')
+        im = plt.imshow(inst.density, vmax=100, cmap=color, interpolation='bilinear')
 
         # plot vector field
         q = plt.quiver(inst.velo[:, :, 1], inst.velo[:, :, 0], scale=10, angles='xy')
