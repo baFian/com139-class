@@ -15,6 +15,9 @@ even so this task was complicated, so I only managed to make one animation. I ev
 3-	Create Color Schemas:
 I think this was the easiest task because I noticed the simulator is using matplotlib and pyplot so I just researched on the internet how to change color in a imshow statement and
 I found that there are already preset color palettes
+Bibliography: 
+John Hunter, Darren Dale, Eric Firing, &amp; Michael Droettboom. (2021). Choosing colormaps in matplotlib¶. Choosing Colormaps in Matplotlib - Matplotlib 3.5.0 documentation. 
+Retrieved April 28, 2022, from https://matplotlib.org/3.5.0/tutorials/colors/colormaps.html 
 
 4-	Simulate the presence of objects in the simulation:
 to get this feature I played too much with the code to see how I could get an object, I tried to put more density, then much more, but I didn't get the result until I realized that 
