@@ -1,7 +1,7 @@
 How to run Fluid Simulation
 $ Python3 fluid.py 'config file' 'color scheme'
 
-Change the animation via file by deleting the word 'rotation' 
+Change the animation via document by deleting the word 'rotation' 
 at the begining of the file.
 
 Movie 1 line:
