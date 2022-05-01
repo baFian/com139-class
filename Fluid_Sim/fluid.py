@@ -11,6 +11,7 @@ import sys
 import json
 
 
+
 class Fluid:
 
     def __init__(self):
@@ -235,26 +236,18 @@ if __name__ == "__main__":
 
             objValues = setUp.get('objects',[])
             set_objects(objValues, inst, 0)
-            
+
+            # We add new density creators in here # add density into a 3*3 square
             denValues = setUp.get('densities', [])
             set_densities(denValues, inst)
 
+            # We add velocity vector values in here
             velValues = setUp.get('velocities',[])
             an = setUp.get('animation')
             set_velocities(velValues,inst,an,i)
-            #print(an.get('anim'))
             
- 
-            #inst.diff =1000
-            # We add new density creators in here
-            #inst.density[30:33, 30:37] += 100
-            #inst.density[14:17, 14:17] = 0
-            #inst.density[14:17, 14:17] += 500   # add density into a 3*3 square
-            # We add velocity vector values in here
-            #inst.velo[40, 40] = [-1, -1]
             inst.step()
             set_objects(objValues,inst, 200)
-            #inst.density[14:17, 14:17] = 0
             im.set_array(inst.density)
             q.set_UVC(inst.velo[:, :, 1], inst.velo[:, :, 0])
             # print(f"Density sum: {inst.density.sum()}")
@@ -267,8 +260,9 @@ if __name__ == "__main__":
 
         # plot vector field
         q = plt.quiver(inst.velo[:, :, 1], inst.velo[:, :, 0], scale=10, angles='xy')
-        anim = animation.FuncAnimation(fig, update_im, interval=0)
-        # anim.save("movie.mp4", fps=30, extra_args=['-vcodec', 'libx264'])
+        #frames saved in the video
+        anim = animation.FuncAnimation(fig, update_im, frames=100, interval=0)
+        anim.save("movie5.mp4", fps=30, extra_args=['-vcodec', 'libx264'])
         plt.show()
 
     except ImportError:

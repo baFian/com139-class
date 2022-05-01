@@ -1,0 +1,20 @@
+How to run Fluid Simulation
+$ Python3 fluid.py 'config file' 'color scheme'
+
+Change the animation via file by deleting the word 'rotation' 
+at the begining of the file.
+
+Movie 1 line:
+Python3 fluid.py config4.json magma
+
+Movie 2 line:
+Python3 fluid.py config3.json Greens
+
+Movie 3 line:
+Python3 fluid.py config2.json plasma
+
+Movie 4 line:
+Python3 fluid.py config1.json Reds
+
+Movie 5 line:
+Python3 fluid.py config.json jet
